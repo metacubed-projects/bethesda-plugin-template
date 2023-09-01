@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Bethesda plugin from YAML",
+            "group": {
+                "kind": "build"
+            },
+            "type": "process",
+            "command": "${config:tools.spriggit.path}",
+            "args": [
+                "deserialize",
+                "--InputPath",
+                "src",
+                "--OutputPath",
+                "out/${config:tools.spriggit.compiled-plugin-name}"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "label": "Extract YAML from Bethesda plugin",
+            "group": {
+                "kind": "build"
+            },
+            "type": "process",
+            "command": "${config:tools.spriggit.path}",
+            "args": [
+                "serialize",
+                "--InputPath",
+                "out/${config:tools.spriggit.compiled-plugin-name}",
+                "--OutputPath",
+                "src",
+                "--GameRelease",
+                "SkyrimSE",
+                "--PackageName",
+                "Spriggit.Yaml"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            }
+        }
+    ]
+}
