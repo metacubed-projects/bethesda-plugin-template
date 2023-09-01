@@ -1,0 +1,12 @@
+SpriggitSource:
+  PackageName: Spriggit.Yaml.Skyrim
+  Version: 0.3.0
+ModKey: Example.esp
+GameRelease: SkyrimSE
+ModHeader:
+  Flags:
+  - LightMaster
+  Author: Example Author
+  Description: This plugin was generated from the Bethesda Plugin Template using Spriggit.
+  MasterReferences:
+  - Master: Skyrim.esm
