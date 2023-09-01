@@ -1,0 +1,7 @@
+# Project output directory
+out/
+
+# Bethesda Game Plugin files
+*.esl
+*.esm
+*.esp
