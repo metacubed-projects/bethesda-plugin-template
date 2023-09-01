@@ -1,0 +1,40 @@
+name: Build Bethesda plugin from YAML
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build Bethesda plugin from code
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Read plugin information
+      id: read-plugin-info
+      uses: CumulusDS/get-yaml-paths-action@v1.0.1
+      with:
+        file: src/RecordData.yaml
+        plugin-file-name: ModKey
+    - name: Download Spriggit
+      uses: robinraju/release-downloader@v1.8
+      with:
+        repository: Mutagen-Modding/Spriggit
+        latest: true
+        fileName: Spriggit.CLI.zip
+        tarBall: false
+        zipBall: false
+        out-file-path: tools
+        extract: true
+    - name: Run Spriggit
+      run: |
+        mkdir out
+        tools/Spriggit.CLI.exe deserialize --InputPath src --OutputPath "out/${{ steps.read-plugin-info.outputs.plugin-file-name }}"
+    - name: Store generated plugin
+      uses: actions/upload-artifact@v3
+      with:
+        name: "${{ steps.read-plugin-info.outputs.plugin-file-name }}"
+        path: "out/${{ steps.read-plugin-info.outputs.plugin-file-name }}"
+        retention-days: 1
